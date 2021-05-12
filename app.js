@@ -20,11 +20,11 @@ var year = dateObj.getUTCFullYear();
 async function getResponseJson() {
     //Efetua request no GetResponse para obter o json de informacoes e jogar para o Zoho
 
-    if(month.toString().length < 2){
+    if (month.toString().length < 2) {
         month = "0" + month;
     }
 
-    if(day.toString().length < 2){
+    if (day.toString().length < 2) {
         day = "0" + day;
     }
 
@@ -87,10 +87,10 @@ async function makeNewZohoToken() {
 
 async function makeZohoPost() {
     //Efetua request para post dos contatos no Zoho
-    
-    if(new_json_final.length <= 59){
+
+    if (new_json_final.length <= 59) {
         console.log("Sem informacoes a serem upadas..");
-    } else{
+    } else {
         const config = require("./data.json");
 
         const zoho_options_post = {
@@ -101,7 +101,7 @@ async function makeZohoPost() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: config, 
+            body: config,
             json: true
         }
 
@@ -118,16 +118,20 @@ async function deleteJson() {
     try {
         fs.unlinkSync(path)
         console.log("Json deletado")
-      } catch(err) {
+    } catch (err) {
         console.error(err)
-      }
+    }
 }
 
-async function main() {
+async function checarData() {
     let res = await getResponseJson();
     setTimeout(makeNewZohoToken, 5000);
     setTimeout(makeZohoPost, 10000);
     setTimeout(deleteJson, 20000);
+}
+
+async function main() {
+    setTimeout(checarData, 40000);
 }
 
 main()
